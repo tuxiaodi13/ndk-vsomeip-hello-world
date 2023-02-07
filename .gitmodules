@@ -1,6 +1,7 @@
 [submodule "external/vsomeip"]
 	path = external/vsomeip
-	url = https://github.com/GENIVI/vsomeip.git
+	url = git@github.com:tuxiaodi13/vsomeip.git
 [submodule "external/boost-cmake"]
 	path = external/boost-cmake
-	url = https://github.com/Orphis/boost-cmake.git
+	url = git@github.com:tuxiaodi13/boost-cmake.git
+	branch = 3.1.20.2
