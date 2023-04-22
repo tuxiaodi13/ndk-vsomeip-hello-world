@@ -12,13 +12,16 @@
         <service
             android:name=".ServiceVsomeipHelloWorldService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"
+            android:process=":service" />
         <service
             android:name=".ServiceVsomeipHelloWorldClient"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"
+            android:process=":client" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

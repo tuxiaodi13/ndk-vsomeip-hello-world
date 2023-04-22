@@ -3,7 +3,11 @@ package com.example.vsomeiphelloworld;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.system.ErrnoException;
+import android.system.Os;
 import android.util.Log;
+
+import java.io.File;
 
 public class ServiceVsomeipHelloWorldService extends Service {
     private static final String TAG = "ServiceVsomeipHelloWorldService";
@@ -36,6 +40,8 @@ public class ServiceVsomeipHelloWorldService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand()");
 
+        initVSomeIp();
+
         System.loadLibrary("ServiceVsomeipHelloWorldServiceJNI");
 
         Log.d(TAG, runNative());
@@ -44,4 +50,20 @@ public class ServiceVsomeipHelloWorldService extends Service {
     }
 
     public native String runNative();
+
+
+    private void initVSomeIp() {
+        File vsomeipBaseDir = new File(getCacheDir(), "vsomeip");
+        boolean ret = vsomeipBaseDir.mkdir();
+        Log.d(TAG, "init_vsomeip() mkdir ret=" + ret);
+
+        try {
+            Os.setenv("VSOMEIP_BASE_PATH", vsomeipBaseDir.getAbsolutePath() + "/", true);
+        } catch (ErrnoException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(TAG, "vsomeipBaseDir: " + vsomeipBaseDir.getAbsolutePath());
+        Log.d(TAG, "Os.getenv(\"VSOMEIP_BASE_PATH\"): " + Os.getenv("VSOMEIP_BASE_PATH"));
+    }
 }
